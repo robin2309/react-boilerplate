@@ -1,11 +1,18 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './index.js',
+  target: 'node',
+  externals: [nodeExternals()],
+  entry: {
+    server: ['./src/server/index.js']
+  },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: '[name].js'
   },
+
   module: {
     loaders: [
       {
@@ -13,9 +20,9 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react']
+          presets: ['es2015']
         }
       }
     ]
-  },
+  }
 };
